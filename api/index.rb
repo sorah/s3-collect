@@ -157,6 +157,21 @@ module Api
                 s3:AbortMultipartUpload
               ),
               Resource: "arn:aws:s3:::#{files_bucket}/#{prefix}*",
+              Condition: {
+                StringEqualsIfExists: {
+                  "s3:x-amz-storage-class" => "standard",
+                },
+                Null: {
+                  "s3:x-amz-server-side-encryption" => "true",
+                  "s3:x-amz-server-side-encryption-aws-kms-key-id" => "true",
+                  "s3:x-amz-website-redirect-location" => "true",
+                  # These cannot be applied unless a bucket has ObjectLockConfiguration, but to ensure safety
+                  "s3:object-lock-legal-hold" => "true",
+                  "s3:object-lock-retain-until-date" => "true",
+                  "s3:object-lock-remaining-retention-days" => "true",
+                  # ACLs cannot be applied unless s3:PutObjectAcl
+                },
+              },
             },
           ],
         }.to_json,
