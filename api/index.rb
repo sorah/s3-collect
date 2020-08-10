@@ -158,7 +158,7 @@ module Api
               Resource: "arn:aws:s3:::#{files_bucket}/#{prefix}*",
               Condition: {
                 StringEqualsIfExists: {
-                  "s3:x-amz-storage-class" => "standard",
+                  "s3:x-amz-storage-class" => "STANDARD",
                 },
                 Null: {
                   "s3:x-amz-server-side-encryption" => "true",
