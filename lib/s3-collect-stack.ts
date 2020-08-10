@@ -26,7 +26,7 @@ export class S3CollectStack extends cdk.Stack {
     });
     filesBucket.addLifecycleRule({
       enabled: true,
-      abortIncompleteMultipartUploadAfter: cdk.Duration.days(14),
+      abortIncompleteMultipartUploadAfter: cdk.Duration.days(1),
     });
 
     const uiBucket = new s3.Bucket(this, 'ui-bucket', {});
