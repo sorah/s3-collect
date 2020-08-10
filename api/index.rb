@@ -154,7 +154,6 @@ module Api
               Effect: 'Allow',
               Action: %w(
                 s3:PutObject
-                s3:AbortMultipartUpload
               ),
               Resource: "arn:aws:s3:::#{files_bucket}/#{prefix}*",
               Condition: {
@@ -172,6 +171,13 @@ module Api
                   # ACLs cannot be applied unless s3:PutObjectAcl
                 },
               },
+            },
+            {
+              Effect: 'Allow',
+              Action: %w(
+                s3:AbortMultipartUpload
+              ),
+              Resource: "arn:aws:s3:::#{files_bucket}/#{prefix}*",
             },
           ],
         }.to_json,
